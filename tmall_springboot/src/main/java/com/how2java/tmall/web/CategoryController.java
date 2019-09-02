@@ -2,14 +2,22 @@ package com.how2java.tmall.web;
  
 import com.how2java.tmall.pojo.Category;
 import com.how2java.tmall.service.CategoryService;
+import com.how2java.tmall.util.ImageUtil;
 import com.how2java.tmall.util.Page4Navigator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
- 
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 		/*
 		 * 这个就是专门用来提供 RESTFUL 服务器控制器了
@@ -50,5 +58,36 @@ public class CategoryController {
         start = start<0?0:start;
         Page4Navigator<Category> page =categoryService.list(start, size, 5);  //5表示导航分页最多有5个，像 [1,2,3,4,5] 这样
         return page;
+    }
+    
+    /*
+            提供增加方法add.
+    1. 首选通过CategoryService 保存到数据库
+    2. 然后接受上传图片，并保存到 img/category目录下
+    3. 文件名使用新增分类的id
+    4. 如果目录不存在，需要创建
+    5. image.transferTo 进行文件复制
+    6. 调用ImageUtil的change2jpg 进行文件类型强制转换为 jpg格式
+    7. 保存图片
+
+           注： 这里list和add对应的映射路径都是 categories，
+    但是一个是 GetMapping一个是 PostMapping，REST 规范就是通过method的区别来辨别到底是获取还是增加的。
+    
+*/    
+    @PostMapping("/categories")
+    public Object add(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
+        categoryService.add(bean);
+        saveOrUpdateImageFile(bean, image, request);
+        return bean;
+    }
+    public void saveOrUpdateImageFile(Category bean, MultipartFile image, HttpServletRequest request)
+            throws IOException {
+        File imageFolder= new File(request.getServletContext().getRealPath("img/category"));
+        File file = new File(imageFolder,bean.getId()+".jpg");
+        if(!file.getParentFile().exists())
+            file.getParentFile().mkdirs();
+        image.transferTo(file);
+        BufferedImage img = ImageUtil.change2jpg(file);
+        ImageIO.write(img, "jpg", file);
     }
 }

@@ -36,6 +36,7 @@ import com.how2java.tmall.util.Page4Navigator;
 public class CategoryService {
 	@Autowired CategoryDAO categoryDAO;
 	
+	//分页功能
 	public Page4Navigator<Category> list(int start, int size, int navigatePages) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size,sort);
@@ -43,9 +44,15 @@ public class CategoryService {
  
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
-
+	
+	//列表展示
 	public List<Category> list() {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         return categoryDAO.findAll(sort);
+    }
+	
+	//新增功能
+	public void add(Category bean) {
+        categoryDAO.save(bean);
     }
 }
