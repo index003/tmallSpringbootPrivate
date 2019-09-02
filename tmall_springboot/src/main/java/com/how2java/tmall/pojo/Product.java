@@ -37,8 +37,18 @@ public class Product {
     private float promotePrice;
     private int stock;
     private Date createDate;
+    @Transient
+    private ProductImage firstProductImage;
  
-    public int getId() {
+    public ProductImage getFirstProductImage() {
+		return firstProductImage;
+	}
+
+	public void setFirstProductImage(ProductImage firstProductImage) {
+		this.firstProductImage = firstProductImage;
+	}
+
+	public int getId() {
         return id;
     }
  
