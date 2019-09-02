@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -109,5 +110,35 @@ public class CategoryController {
         File file = new File(imageFolder,id+".jpg");
         file.delete();
         return null;
+    }
+    
+    //提供 get 方法，把id对应的Category取出来，并转换为json对象发给浏览器
+    
+    @GetMapping("/categories/{id}")
+    public Category get(@PathVariable("id") int id) throws Exception {
+        Category bean=categoryService.get(id);
+        return bean;
+    }
+    
+    /*
+            增加update函数，它是用 PutMapping 来映射的，因为 REST要求修改用PUT来做。
+    1. 获取参数名称
+            这里获取参数用的是 request.getParameter("name"). 为什么不用 add里的注入一个 Category对象呢？ 因为。。。PUT 方式注入不了。。。 
+            只能用这种方式取参数了，试了很多次才知道是这么个情况~
+    2. 通过 CategoryService 的update方法更新到数据库
+    3. 如果上传了图片，调用增加的时候共用的 saveOrUpdateImageFile 方法。
+    4. 返回这个分类对象。
+    */
+    
+    @PutMapping("/categories/{id}")
+    public Object update(Category bean, MultipartFile image,HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        bean.setName(name);
+        categoryService.update(bean);
+ 
+        if(image!=null) {
+            saveOrUpdateImageFile(bean, image, request);
+        }
+        return bean;
     }
 }

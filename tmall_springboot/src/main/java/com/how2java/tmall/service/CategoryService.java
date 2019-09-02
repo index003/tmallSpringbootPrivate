@@ -60,4 +60,15 @@ public class CategoryService {
     public void delete(int id) {
         categoryDAO.delete(id);
     }
+    
+    //编辑功能
+    public Category get(int id) {
+        Category c= categoryDAO.findOne(id);
+        return c;
+    }
+    
+    //修改功能
+    public void update(Category bean) {
+        categoryDAO.save(bean);
+    }
 }
