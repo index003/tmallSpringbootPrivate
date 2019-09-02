@@ -55,4 +55,9 @@ public class CategoryService {
 	public void add(Category bean) {
         categoryDAO.save(bean);
     }
+	
+	//删除功能
+    public void delete(int id) {
+        categoryDAO.delete(id);
+    }
 }
