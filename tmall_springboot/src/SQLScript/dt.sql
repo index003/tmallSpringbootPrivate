@@ -104,3 +104,11 @@ insert into user values(null,'测试用户2','password2',null);
 insert into user values(null,'测试用户3','password3',null);
 insert into user values(null,'测试用户4','password4',null);
 insert into user values(null,'测试用户5','password5',null);
+
+-- 倒数第二个参数3是对应的用户id，需要在数据库中存在，请根据自己的数据信息自行修改。
+insert INTO order_ VALUES (1,'201608241638122609867','某某市，某某区，某某街道，某某号 ','610000','某某某','15111111111',NULL,'2016-12-30',NULL,NULL,NULL,3,'waitDelivery');
+
+--第二个参数2、3分别对应的产品id，倒数第二个参数3是对应的用户id，需要在数据库中存在，请根据自己的数据信息自行修改。
+insert INTO orderitem VALUES (1,1,1,3,2);
+insert INTO orderitem VALUES (2,1,1,3,2);
+insert INTO orderitem VALUES (3,3,1,3,2);
