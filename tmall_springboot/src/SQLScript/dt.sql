@@ -95,3 +95,12 @@ CREATE TABLE orderitem (
   CONSTRAINT fk_orderitem_product FOREIGN KEY (pid) REFERENCES product (id),
   CONSTRAINT fk_orderitem_order FOREIGN KEY (oid) REFERENCES order_ (id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+
+
+insert into user values(null,'测试用户1','password1',null);
+insert into user values(null,'测试用户2','password2',null);
+insert into user values(null,'测试用户3','password3',null);
+insert into user values(null,'测试用户4','password4',null);
+insert into user values(null,'测试用户5','password5',null);
