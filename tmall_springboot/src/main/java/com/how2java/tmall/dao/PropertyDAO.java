@@ -22,4 +22,6 @@ import com.how2java.tmall.pojo.Property;
 
 public interface PropertyDAO extends JpaRepository<Property,Integer>{
     Page<Property> findByCategory(Category category, Pageable pageable);
+    //修改PropertyDAO ，增加通过分类获取所有属性集合的方法
+    List<Property> findByCategory(Category category);
 }

@@ -52,5 +52,10 @@ public class PropertyService {
         return new Page4Navigator<>(pageFromJPA,navigatePages);
          
     }  
+    
+    //修改 PropertyService, 增加通过分类获取所有属性集合的方法
+    public List<Property> listByCategory(Category category){
+        return propertyDAO.findByCategory(category);
+    }
  
 }
