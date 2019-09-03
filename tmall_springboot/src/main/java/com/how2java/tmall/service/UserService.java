@@ -20,6 +20,16 @@ import com.how2java.tmall.util.Page4Navigator;
 public class UserService {
      
     @Autowired UserDAO userDAO;
+    
+    //新增isExist(String name)的实现，判断某个名称是否已经被使用过了
+    public boolean isExist(String name) {
+        User user = getByName(name);
+        return null!=user;
+    }
+ 
+    public User getByName(String name) {
+        return userDAO.findByName(name);
+    }
  
     public Page4Navigator<User> list(int start, int size, int navigatePages) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
@@ -28,4 +38,7 @@ public class UserService {
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
  
+    public void add(User user) {
+        userDAO.save(user);
+    }
 }
