@@ -30,6 +30,11 @@ public class UserService {
     public User getByName(String name) {
         return userDAO.findByName(name);
     }
+    
+    //登录
+    public User get(String name, String password) {
+        return userDAO.getByNameAndPassword(name,password);
+    }
  
     public Page4Navigator<User> list(int start, int size, int navigatePages) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");

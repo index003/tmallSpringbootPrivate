@@ -16,6 +16,8 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 		/*
 		home()方法映射首页访问路径 "forehome".
 		1. 查询所有分类
@@ -61,5 +63,21 @@ public class ForeRESTController {
          
         return Result.success();
     }       
+    
+    @PostMapping("/forelogin")
+    public Object login(@RequestBody User userParam, HttpSession session) {
+        String name =  userParam.getName();
+        name = HtmlUtils.htmlEscape(name);
+ 
+        User user =userService.get(name,userParam.getPassword());
+        if(null==user){
+            String message ="账号密码错误";
+            return Result.fail(message);
+        }
+        else{
+            session.setAttribute("user", user);
+            return Result.success();
+        }
+    }
  
 }
