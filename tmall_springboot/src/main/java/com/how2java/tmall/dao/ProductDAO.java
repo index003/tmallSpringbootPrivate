@@ -11,4 +11,6 @@ import com.how2java.tmall.pojo.Product;
  
 public interface ProductDAO extends JpaRepository<Product,Integer>{
     Page<Product> findByCategory(Category category, Pageable pageable);
+    //新增一个通过分类查询所有产品的方法，因为这里不需要分页。
+    List<Product> findByCategoryOrderById(Category category);
 }
