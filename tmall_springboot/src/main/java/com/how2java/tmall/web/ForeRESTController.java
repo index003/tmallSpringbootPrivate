@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class ForeRESTController {
-    @Autowired
+	@Autowired
     CategoryService categoryService;
     @Autowired
     ProductService productService;
@@ -147,5 +147,15 @@ public class ForeRESTController {
         }
  
         return c;
+    }
+    
+    @PostMapping("foresearch")
+    public Object search( String keyword){
+        if(null==keyword)
+            keyword = "";
+        List<Product> ps= productService.search(keyword,0,20);
+        productImageService.setFirstProdutImages(ps);
+        productService.setSaleAndReviewNumber(ps);
+        return ps;
     }
 }

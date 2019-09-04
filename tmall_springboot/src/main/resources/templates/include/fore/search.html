@@ -1,18 +1,12 @@
-<div class th:fragment="html">
-    <a th:href="${application.contextPath}">
-        <img id="logo" src="img/site/logo.gif" class="logo">
-    </a>
-    <form action="search" method="get" >
-        <div class="searchDiv">
-            <input name="keyword" type="text" placeholder="时尚男鞋  太阳镜 ">
-            <button  type="submit" class="searchButton">搜索</button>
-            <div class="searchBelow">
-                <span th:each="c,status: ${application.categories_below_search}" th:if="${status.index>=5 && status.index<=8}">
-                    <a th:href="@{'category?cid='+${c.id}}" th:text="${c.name}" ></a>
-                    <span th:if="${status.index!=8}">|</span>
-                </span>
- 
-            </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="include/fore/header::html" ></head>
+    <body>
+        <div id="workingArea">
+            <div th:replace="include/fore/top::html" ></div>   
+            <div th:replace="include/fore/simpleSearch::html" ></div>  
+            <div th:replace="include/fore/searchPage::html" ></div>
+            <div th:replace="include/fore/footer::html" ></div>
         </div>
-    </form>
-</div>
+    </body>
+</html>
