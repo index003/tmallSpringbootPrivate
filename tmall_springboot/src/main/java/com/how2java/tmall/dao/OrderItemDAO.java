@@ -17,4 +17,6 @@ import com.how2java.tmall.pojo.User;
 
 public interface OrderItemDAO extends JpaRepository<OrderItem,Integer>{
     List<OrderItem> findByOrderOrderByIdDesc(Order order);
+    //增加根据产品获取OrderItem的方法：
+    List<OrderItem> findByProduct(Product product);
 }

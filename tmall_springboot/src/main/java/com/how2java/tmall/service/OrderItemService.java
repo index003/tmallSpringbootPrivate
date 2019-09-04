@@ -3,6 +3,8 @@ package com.how2java.tmall.service;
 import com.how2java.tmall.dao.OrderItemDAO;
 import com.how2java.tmall.pojo.Order;
 import com.how2java.tmall.pojo.OrderItem;
+import com.how2java.tmall.pojo.Product;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
  
@@ -23,6 +25,10 @@ public class OrderItemService {
         for (Order order : orders)
             fill(order);
     }
+    
+    public void update(OrderItem orderItem) {
+        orderItemDAO.save(orderItem);
+    }
  
     public void fill(Order order) {
         List<OrderItem> orderItems = listByOrder(order);
@@ -38,6 +44,32 @@ public class OrderItemService {
         order.setTotalNumber(totalNumber);     
     }
      
+    public void add(OrderItem orderItem) {
+        orderItemDAO.save(orderItem);
+    }
+    public OrderItem get(int id) {
+        return orderItemDAO.findOne(id);
+    }
+ 
+    public void delete(int id) {
+        orderItemDAO.delete(id);
+    }
+ 
+    public int getSaleCount(Product product) {
+        List<OrderItem> ois =listByProduct(product);
+        int result =0;
+        for (OrderItem oi : ois) {
+            if(null!=oi.getOrder())
+                if(null!= oi.getOrder() && null!=oi.getOrder().getPayDate())
+                    result+=oi.getNumber();
+        }
+        return result;
+    }
+ 
+    public List<OrderItem> listByProduct(Product product) {
+        return orderItemDAO.findByProduct(product);
+    }
+    
     public List<OrderItem> listByOrder(Order order) {
         return orderItemDAO.findByOrderOrderByIdDesc(order);
     }

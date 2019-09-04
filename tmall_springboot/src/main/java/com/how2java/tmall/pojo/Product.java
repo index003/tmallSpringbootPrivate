@@ -39,6 +39,18 @@ public class Product {
     private Date createDate;
     @Transient
     private ProductImage firstProductImage;
+    //单个产品图片集合
+    @Transient
+    private List<ProductImage> productSingleImages;
+    //详情产品图片集合
+    @Transient
+    private List<ProductImage> productDetailImages;
+    //累计评价
+    @Transient
+    private int reviewCount;
+    //销量
+    @Transient
+    private int saleCount;
  
     public ProductImage getFirstProductImage() {
 		return firstProductImage;
@@ -111,4 +123,37 @@ public class Product {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+    
+    public List<ProductImage> getProductSingleImages() {
+        return productSingleImages;
+    }
+    public void setProductSingleImages(List<ProductImage> productSingleImages) {
+        this.productSingleImages = productSingleImages;
+    }
+    public List<ProductImage> getProductDetailImages() {
+        return productDetailImages;
+    }
+    public void setProductDetailImages(List<ProductImage> productDetailImages) {
+        this.productDetailImages = productDetailImages;
+    }
+    public int getReviewCount() {
+        return reviewCount;
+    }
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+    public int getSaleCount() {
+        return saleCount;
+    }
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", category=" + category + ", name=" + name + ", subTitle=" + subTitle
+                + ", originalPrice=" + originalPrice + ", promotePrice=" + promotePrice + ", stock=" + stock
+                + ", createDate=" + createDate + ", firstProductImage=" + firstProductImage + ", reviewCount="
+                + reviewCount + ", saleCount=" + saleCount + "]";
+    }
+ 
 }
